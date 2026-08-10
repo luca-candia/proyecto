@@ -3,6 +3,7 @@ import cors from 'cors';
 import sequelize from './config/database.js';
 import 'dotenv/config';
 import './models/associations.js';
+import serviciosRoutes from './routes/serviciosRoutes.js';
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.get('/api/health', (req, res) => {
     message: 'El Gestor de Turnos está vivo y conectado a PostgreSQL'
   });
 });
+
+app.use('/api/servicios', serviciosRoutes);
 
 const PORT = process.env.PORT || 3000;
 
