@@ -18,4 +18,13 @@ const create = async (req, res, next) => {
   }
 };
 
-export default { getAll, create };
+const completar = async (req, res, next) => {
+  try {
+    await turnoService.completarTurno(req.params.id, req.body.notas);
+    res.json({ mensaje: 'Turno completado con éxito' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export default { getAll, create, completar };

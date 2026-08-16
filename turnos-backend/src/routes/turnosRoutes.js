@@ -7,4 +7,6 @@ router.get('/', turnoController.getAll);
 
 router.post('/', turnoController.create);
 
+router.patch('/:id/completar', turnoController.completar);
+
 export default router;

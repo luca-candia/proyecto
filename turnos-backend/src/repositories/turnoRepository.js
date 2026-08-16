@@ -10,4 +10,12 @@ const create = async (datosTurno) => {
   return await Turno.create(datosTurno);
 };
 
-export default { findAll, create };
+const findById = async (id) => {
+  return await Turno.findByPk(id, { include: [Cliente, Servicio] });
+};
+
+const update = async (id, datos) => {
+  return await Turno.update(datos, { where: { id } });
+};
+
+export default { findAll, create, findById, update };

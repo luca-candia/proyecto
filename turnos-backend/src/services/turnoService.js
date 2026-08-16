@@ -29,4 +29,27 @@ const crearTurno = async (datos) => {
   return await turnoRepository.create(datos);
 };
 
-export default { obtenerTodos, crearTurno };
+const completarTurno = async (id, notasVisita) => {
+  const turno = await turnoRepository.findById(id);
+  
+  if (!turno) throw new Error('El turno no existe.');
+  if (turno.estado !== 'pendiente') throw new Error('Este turno ya fue completado o cancelado.');
+
+  const precioFinal = turno.Servicio.precio_actual;
+
+  await turnoRepository.update(id, {
+    estado: 'completado',
+    precio_cobrado: precioFinal
+  });
+
+  if (notasVisita) {
+    await Cliente.update(
+      { notas: notasVisita },
+      { where: { id: turno.cliente_id } }
+    );
+  }
+
+  return true;
+};
+
+export default { obtenerTodos, crearTurno, completarTurno };
