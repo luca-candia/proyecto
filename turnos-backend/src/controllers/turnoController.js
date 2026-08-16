@@ -27,4 +27,13 @@ const completar = async (req, res, next) => {
   }
 };
 
-export default { getAll, create, completar };
+const cancelar = async (req, res, next) => {
+  try {
+    await turnoService.cancelarTurno(req.params.id);
+    res.json({ mensaje: 'Turno cancelado exitosamente' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export default { getAll, create, completar, cancelar };

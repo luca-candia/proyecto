@@ -9,4 +9,6 @@ router.post('/', turnoController.create);
 
 router.patch('/:id/completar', turnoController.completar);
 
+router.patch('/:id/cancelar', turnoController.cancelar);
+
 export default router;

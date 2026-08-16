@@ -19,6 +19,10 @@ const Turno = sequelize.define('Turno', {
   precio_cobrado: {
     type: DataTypes.INTEGER,
     allowNull: true,
+  },
+  notas_visita: {
+    type: DataTypes.TEXT,
+    allowNull: true,
   }
 }, {
   tableName: 'turnos',

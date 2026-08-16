@@ -39,17 +39,24 @@ const completarTurno = async (id, notasVisita) => {
 
   await turnoRepository.update(id, {
     estado: 'completado',
-    precio_cobrado: precioFinal
+    precio_cobrado: precioFinal,
+    notas_visita: notasVisita
   });
+  
+  return true;
+};
 
-  if (notasVisita) {
-    await Cliente.update(
-      { notas: notasVisita },
-      { where: { id: turno.cliente_id } }
-    );
-  }
+const cancelarTurno = async (id) => {
+  const turno = await turnoRepository.findById(id);
+  
+  if (!turno) throw new Error('El turno no existe.');
+  if (turno.estado !== 'pendiente') throw new Error('Solo se pueden cancelar turnos que estén pendientes.');
+
+  await turnoRepository.update(id, {
+    estado: 'cancelado'
+  });
 
   return true;
 };
 
-export default { obtenerTodos, crearTurno, completarTurno };
+export default { obtenerTodos, crearTurno, completarTurno, cancelarTurno };
